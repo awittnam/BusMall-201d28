@@ -1,7 +1,9 @@
 var allProducts = [];
-var productNames = ['boots', 'chair', 'scissors']; // TODO: see the pattern here, and what you need to fill in?
+var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweepers', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass']; // array of items
 
 function Product(name, path) {
+  this.name = name
+  this.path = path
   // TODO: Build your constructor and necessary properties.
 }
 
