@@ -1,26 +1,26 @@
 var allProducts = [];
 // array of items
 var productNames = [
-  'bag(1)','banana(1)',
-  'bathroom(1)',
-  'boots(1)',
-  'breakfast(1)',
-  'bubblegum(1)',
-  'chair(2)',
-  'cthulhu(1)',
-  'dog-duck(1)',
-  'dragon(1)',
-  'pen(1)',
-  'pet-sweep(1)',
-  'scissors(1)',
-  'shark(1)',
+  'bag (1)','banana (1)',
+  'bathroom (1)',
+  'boots (1)',
+  'breakfast (1)',
+  'bubblegum (1)',
+  'chair (2)',
+  'cthulhu (1)',
+  'dog-duck (1)',
+  'dragon (1)',
+  'pen (1)',
+  'pet-sweep (1)',
+  'scissors (1)',
+  'shark (1)',
   'sweepers',
   'sweep',
-  'tauntaun(1)',
-  'unicorn(1)',
+  'tauntaun (1)',
+  'unicorn (1)',
   'usb',
-  'water-can(1)',
-  'wine-glass(1)'
+  'water-can (1)',
+  'wine-glass (1)'
 ];
 
 
