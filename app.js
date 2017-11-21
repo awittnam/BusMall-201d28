@@ -63,7 +63,12 @@ var productRank = {
   },
 
 
-  // tallyClicks: function(elementId) {
+//THIS IS NOT WORKING!!  CLICK IS NOT WORKING
+  tallyClicks: function onClick() {
+    this.click += 1;
+    document.getElementById('click').innerHTML = this.click;
+    console.log;
+  },
   //   // TODO: Hmm... what's going to happen here?
   // },
   //
