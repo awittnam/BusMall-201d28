@@ -28,9 +28,13 @@ var productRank = {
   // NOTE: A-C-P reminder... Make very intentional and iterative changes to your code, and then A-C-P.
 
   getRandomIndex: function() {
-return Math.floor(Math.random() * (max - min)) + min;
+return Math.floor(Math.random() * allProducts.length);
+console.log(getRandomIndex);
+  
+}
     // TODO: Hmm... what's going to happen here?
   },
+//
 
   displayImages: function() {
     // TODO: Hmm... what's going to happen here?
@@ -50,7 +54,7 @@ return Math.floor(Math.random() * (max - min)) + min;
 
   onClick: function() {
     // TODO: Hmm... what's going to happen here?
-};
+}
 
 productRank.imageEls.addEventListener('click', productRank.onClick);
 productRank.displayImages();
