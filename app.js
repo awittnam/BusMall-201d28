@@ -64,6 +64,7 @@ var productRank = {
 
 
 //THIS IS NOT WORKING!!  CLICK IS NOT WORKING
+//I will bring my counter over from my about me assignment//
   tallyClicks: function onClick() {
     this.click += 1;
     document.getElementById('click').innerHTML = this.click;
