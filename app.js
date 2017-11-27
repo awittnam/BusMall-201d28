@@ -1,90 +1,162 @@
+'use strict'
+
 var allProducts = [];
-// array of items
-var productNames = [
-  'bag (1)','banana (1)',
-  'bathroom (1)',
-  'boots (1)',
-  'breakfast (1)',
-  'bubblegum (1)',
-  'chair (2)',
-  'cthulhu (1)',
-  'dog-duck (1)',
-  'dragon (1)',
-  'pen (1)',
-  'pet-sweep (1)',
-  'scissors (1)',
-  'shark (1)',
-  'sweepers',
-  'sweep',
-  'tauntaun (1)',
-  'unicorn (1)',
-  'usb',
-  'water-can (1)',
-  'wine-glass (1)'
-];
+var productNames = ['bag', 'banana', 'bathroom', 'boots','breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen','scissors','shark','sweep','sweepers','tauntaun','unicorn', 'usb', 'water-can', 'wine-glass'];
 
-
-
-// var img = new Array(21);
-// for(var i=0;i<21;i++){
-// img[i] = new Image();
-// img[i].src = 'img/' + imageName[i] + '.jpg'; }
+// TODO: Build your constructor and necessary properties.
 
 function Product(name, path) {
   this.name = name;
   this.path = path;
   allProducts.push(this);
-  this.shown = 0;
-  this.click = 0;
-// TODO: Build your constructor and necessary properties.
+  this.votes = 0;
 }
 
-// TODO: Don't forget to build your objects. How can you do this withough having to write 14 lines of `new Product(., ., .)`?
 for (var i = 0; i < productNames.length; i++) {
-  new Product(productNames[i], 'img/' + productNames[i] + '.jpg');
+  new Product (productNames[i], 'img/' + productNames[i] + '.jpg');
 }
 
 var productRank = {
+  imagesEl: document.getElementById('images'),
+  resultsEl: document.getElementById('results'),
+  clickCount: 0,
+
+  image1: new Image(),
+  image2: new Image(),
+  image3: new Image(),
+
   getRandomIndex: function() {
     return Math.floor(Math.random() * allProducts.length);
     // console.log(getRandomIndex);
-
-
   },
-    //TODO: Hmm... what's going to happen here?
 
+  localStorageSet: function() {
+    localStorage.clear ();
+    var encodeAllProducts = JSON.stringify(allProducts);
+    localStorage.setItem('AllProducts', encodeAllProducts);
+  },
 
-  displayImages: function() {
-    // TODO: Hmm... what's going to happen here?
-    var getEl = document.getElementsByClassName('img');
-    for (var j = 0; j < 3; j++) {
-      getEl[j].src = allProducts[productRank.getRandomIndex()].path;
+  localStorageGet: function () {
+    var obj = JSON.parse(localStorage.getItem('AllProducts'));
+    if (obj !== null){
+      allProducts = obj;
     }
   },
+
+  displayImages: function() {
+    var img1 = this.getRandomIndex();
+    var img2 = this.getRandomIndex();
+    var img3 = this.getRandomIndex();
+
+    if(img1 === img2 || img1 === img3 || img2 === img3) {
+      this.displayImages();
+      return;
+
+    }
+    this.image1.src = allProducts[img1].path;
+    this.image2.src = allProducts[img2].path;
+    this.image3.src = allProducts[img3].path;
+
+    this.image1.id = allProducts[img1].name;
+    this.image2.id = allProducts[img2].name;
+    this.image3.id = allProducts[img3].name;
+
+
+    this.imagesEl.appendChild(this.image1);
+    this.imagesEl.appendChild(this.image2);
+    this.imagesEl.appendChild(this.image3);
+  },
+  onClick: function(event) {
+    console.log(event.target.id);
+    if(event.target.id === 'images') {
+      return;
+    } else {
+      productRank.clickCount++;
+      console.log(productRank.clickCount);
+      for(var i in allProducts) {
+        if(event.target.id === allProducts[i].name) {
+          allProducts[i].votes++;
+        }
+      }
+      productRank.displayImages();
+    }
+    if (productRank.clickCount === 25) {
+      productRank.localStorageSet();
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var options = {
+        type: 'bar',
+        data: {
+          labels: allProducts.map(function(x) {return x.name;}),
+          datasets: [{
+            label: '# of Votes',
+            data: allProducts.map(function(x) {return x.votes;}),
+            backgroundColor: [
+              'gray'
+            ],
+            borderColor: [
+              'black'
+            ],
+            borderWidth: 1
+          },
+          ]
+        },
+        options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+        }
+      };
+      var myChart = new Chart(ctx, options);
+      console.log('stuff',myChart);
+      productRank.imagesEl.removeEventListener('click', productRank.onClick);
+    }
+  }
+};
+
+productRank.imagesEl.addEventListener('click', productRank.onClick);
+productRank.displayImages();
+productRank.localStorageGet();
+
+
+
+
+
+//
+// **displayImages: function() {
+//   // TODO: Hmm... what's going to happen here?
+//   var getEl = document.getElementsByClassName('img');
+//   for (var j = 0; j < 3; j++) {
+//     getEl[j].src = allProducts[productRank.getRandomIndex()].path;
+//   }
+// },
 
 
 //THIS IS NOT WORKING!!  CLICK IS NOT WORKING
 //I will bring my counter over from my about me assignment//
-  tallyClicks: function onClick() {
-    this.click += 1;
-    document.getElementById('click').innerHTML = this.click;
-    console.log;
-  },
-  //   // TODO: Hmm... what's going to happen here?
-  // },
-  //
-  // displayResults: function() {
-  //   // TODO: Hmm... what's going to happen here?
-  // },
-  //
-  // showButton: function() {
-  //   // TODO: Hmm... what's going to happen here?
-  // },
-  //
-  // onClick: function() {
-  //   // TODO: Hmm... what's going to happen here?
-  // },
-};
+// tallyClicks: function onClick() {
+//   this.click += 1;
+//   document.getElementById('click').innerHTML = this.click;
+//   console.log;
+// },
+//   // TODO: Hmm... what's going to happen here?
+// },
+//
+// displayResults: function() {
+//   // TODO: Hmm... what's going to happen here?
+// },
+//
+// showButton: function() {
+//   // TODO: Hmm... what's going to happen here?
+// },
+//
+// onClick: function() {
+//   // TODO: Hmm... what's going to happen here?
+// },
+//};
 //
 // productRank.imageEls.addEventListener('click', productRank.onClick);
 productRank.displayImages();
